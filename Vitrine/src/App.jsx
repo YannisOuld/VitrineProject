@@ -1,5 +1,6 @@
 import { useState } from 'react'
-import Parallax from './models/Parallax'
+import { Canvas } from '@react-three/fiber'
+import Parallax from './components/Parallax'
 import './App.css'
 
 function App() {
@@ -8,7 +9,9 @@ function App() {
   return (
 
     <div id="canvas-container">
-      
+
+      <Parallax />
+
     </div>
 
   )
