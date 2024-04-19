@@ -1,133 +1,83 @@
-import React, { useEffect, useState } from 'react';
+import React, { useRef } from "react";
+import Picture1 from "../../src/assets/stairs.jpg";
+import Picture2 from "../../src/assets/moon.png";
+import Picture3 from "../../src/assets/clouds.png";
+import { motion, useScroll, useTransform } from "framer-motion";
 
 const Parallax = () => {
-    const [scrollY, setScrollY] = useState(0);
+    const container = useRef(null);
 
-    useEffect(() => {
-        const handleScroll = () => {
-            setScrollY(window.scrollY);
-        };
+    const word = "with framer-motion";
 
-        window.addEventListener('scroll', handleScroll);
+    const { scrollYProgress } = useScroll({
+        target: container,
+        offset: ["start end", "end start"],
+    });
 
-        return () => {
-            window.removeEventListener('scroll', handleScroll);
-        };
-    }, []);
+    const sm = useTransform(scrollYProgress, [0, 1], [0, -50]);
+    const md = useTransform(scrollYProgress, [0, 1], [0, -50]);
+    const lg = useTransform(scrollYProgress, [0, 1], [0, -600]);
+
+    const images = [
+        {
+            src: Picture1,
+            y: 0,
+        },
+
+        {
+            src: Picture2,
+            y: md,
+        },
+
+        {
+            src: Picture3,
+            y: lg,
+        },
+    ];
 
     return (
-        <div className="parallax-container" style={{ height: '100vh', width: '500px', overflow: 'hidden', margin: 0, display: 'flex', flexDirection: 'column' }}>
-            <div className="parallax-layer" style={{ transform: `translateY(${scrollY * 0.5}px)` }}>
-                <h1>hello</h1>
-                <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Fugit qui illum sed minima ratione beatae ipsa
-                    quis consequatur a, facilis doloribus ex. Ipsa nihil magnam ullam deleniti sunt, optio vitae!Lorem ipsum
-                    dolor sit amet consectetur adipisicing elit. Fugit qui illum sed minima ratione beatae ipsa
-                    quis consequatur a, facilis doloribus ex. Ipsa nihil magnam ullam deleniti sunt, optio vitae!Lorem ipsum
-                    dolor sit amet consectetur adipisicing elit. Fugit qui illum sed minima ratione beatae ipsa
-                    quis consequatur a, facilis doloribus ex. Ipsa nihil magnam ullam deleniti sunt, optio vitae!Lorem ipsum
-                    dolor sit amet consectetur adipisicing elit. Fugit qui illum sed minima ratione beatae ipsa
-                    quis consequatur a, facilis doloribus ex. Ipsa nihil magnam ullam deleniti sunt, optio vitae!Lorem ipsum
-                    dolor sit amet consectetur adipisicing elit. Fugit qui illum sed minima ratione beatae ipsa
-                    quis consequatur a, facilis doloribus ex. Ipsa nihil magnam ullam deleniti sunt, optio vitae!
-                </p>
-                <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Fugit qui illum sed minima ratione beatae ipsa
-                    quis consequatur a, facilis doloribus ex. Ipsa nihil magnam ullam deleniti sunt, optio vitae!Lorem ipsum
-                    dolor sit amet consectetur adipisicing elit. Fugit qui illum sed minima ratione beatae ipsa
-                    quis consequatur a, facilis doloribus ex. Ipsa nihil magnam ullam deleniti sunt, optio vitae!Lorem ipsum
-                    dolor sit amet consectetur adipisicing elit. Fugit qui illum sed minima ratione beatae ipsa
-                    quis consequatur a, facilis doloribus ex. Ipsa nihil magnam ullam deleniti sunt, optio vitae!Lorem ipsum
-                    dolor sit amet consectetur adipisicing elit. Fugit qui illum sed minima ratione beatae ipsa
-                    quis consequatur a, facilis doloribus ex. Ipsa nihil magnam ullam deleniti sunt, optio vitae!Lorem ipsum
-                    dolor sit amet consectetur adipisicing elit. Fugit qui illum sed minima ratione beatae ipsa
-                    quis consequatur a, facilis doloribus ex. Ipsa nihil magnam ullam deleniti sunt, optio vitae!
-                </p>
-                <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Fugit qui illum sed minima ratione beatae ipsa
-                    quis consequatur a, facilis doloribus ex. Ipsa nihil magnam ullam deleniti sunt, optio vitae!Lorem ipsum
-                    dolor sit amet consectetur adipisicing elit. Fugit qui illum sed minima ratione beatae ipsa
-                    quis consequatur a, facilis doloribus ex. Ipsa nihil magnam ullam deleniti sunt, optio vitae!Lorem ipsum
-                    dolor sit amet consectetur adipisicing elit. Fugit qui illum sed minima ratione beatae ipsa
-                    quis consequatur a, facilis doloribus ex. Ipsa nihil magnam ullam deleniti sunt, optio vitae!Lorem ipsum
-                    dolor sit amet consectetur adipisicing elit. Fugit qui illum sed minima ratione beatae ipsa
-                    quis consequatur a, facilis doloribus ex. Ipsa nihil magnam ullam deleniti sunt, optio vitae!Lorem ipsum
-                    dolor sit amet consectetur adipisicing elit. Fugit qui illum sed minima ratione beatae ipsa
-                    quis consequatur a, facilis doloribus ex. Ipsa nihil magnam ullam deleniti sunt, optio vitae!
-                </p>
-                <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Fugit qui illum sed minima ratione beatae ipsa
-                    quis consequatur a, facilis doloribus ex. Ipsa nihil magnam ullam deleniti sunt, optio vitae!Lorem ipsum
-                    dolor sit amet consectetur adipisicing elit. Fugit qui illum sed minima ratione beatae ipsa
-                    quis consequatur a, facilis doloribus ex. Ipsa nihil magnam ullam deleniti sunt, optio vitae!Lorem ipsum
-                    dolor sit amet consectetur adipisicing elit. Fugit qui illum sed minima ratione beatae ipsa
-                    quis consequatur a, facilis doloribus ex. Ipsa nihil magnam ullam deleniti sunt, optio vitae!Lorem ipsum
-                    dolor sit amet consectetur adipisicing elit. Fugit qui illum sed minima ratione beatae ipsa
-                    quis consequatur a, facilis doloribus ex. Ipsa nihil magnam ullam deleniti sunt, optio vitae!Lorem ipsum
-                    dolor sit amet consectetur adipisicing elit. Fugit qui illum sed minima ratione beatae ipsa
-                    quis consequatur a, facilis doloribus ex. Ipsa nihil magnam ullam deleniti sunt, optio vitae!
+        <div
+            ref={container}
+            className=" w-200px  flex flex-col justify-center absolute"
+        >
+
+            <motion.h1 style={{ y: sm }} className="relative">
+                Parallax
+            </motion.h1>
+
+            <h1>Scroll</h1>
+
+            <div className="relative">
+                <p className="text-lg font-bold relative">
+                    {word.split("").map((letter, i) => {
+                        const y = useTransform(
+                            scrollYProgress,
+                            [0, 1],
+                            [0, Math.floor(Math.random() * -75) - 25]
+                        );
+
+                        return (
+                            <motion.span style={{ top: y }} key={`l_${i}`}>
+                                {letter}
+                            </motion.span>
+                        );
+                    })}
                 </p>
             </div>
-            <div className="parallax-layer" style={{ transform: `translateY(${scrollY * -4}vh)`, backgroundColor: 'blue', zIndex: 1 }}>
-                <h2>you</h2>
-                <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Fugit qui illum sed minima ratione beatae ipsa
-                    quis consequatur a, facilis doloribus ex. Ipsa nihil magnam ullam deleniti sunt, optio vitae!Lorem ipsum
-                    dolor sit amet consectetur adipisicing elit. Fugit qui illum sed minima ratione beatae ipsa
-                    quis consequatur a, facilis doloribus ex. Ipsa nihil magnam ullam deleniti sunt, optio vitae!Lorem ipsum
-                    dolor sit amet consectetur adipisicing elit. Fugit qui illum sed minima ratione beatae ipsa
-                    quis consequatur a, facilis doloribus ex. Ipsa nihil magnam ullam deleniti sunt, optio vitae!Lorem ipsum
-                    dolor sit amet consectetur adipisicing elit. Fugit qui illum sed minima ratione beatae ipsa
-                    quis consequatur a, facilis doloribus ex. Ipsa nihil magnam ullam deleniti sunt, optio vitae!Lorem ipsum
-                    dolor sit amet consectetur adipisicing elit. Fugit qui illum sed minima ratione beatae ipsa
-                    quis consequatur a, facilis doloribus ex. Ipsa nihil magnam ullam deleniti sunt, optio vitae!
-                </p>
-                <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Fugit qui illum sed minima ratione beatae ipsa
-                    quis consequatur a, facilis doloribus ex. Ipsa nihil magnam ullam deleniti sunt, optio vitae!Lorem ipsum
-                    dolor sit amet consectetur adipisicing elit. Fugit qui illum sed minima ratione beatae ipsa
-                    quis consequatur a, facilis doloribus ex. Ipsa nihil magnam ullam deleniti sunt, optio vitae!Lorem ipsum
-                    dolor sit amet consectetur adipisicing elit. Fugit qui illum sed minima ratione beatae ipsa
-                    quis consequatur a, facilis doloribus ex. Ipsa nihil magnam ullam deleniti sunt, optio vitae!Lorem ipsum
-                    dolor sit amet consectetur adipisicing elit. Fugit qui illum sed minima ratione beatae ipsa
-                    quis consequatur a, facilis doloribus ex. Ipsa nihil magnam ullam deleniti sunt, optio vitae!Lorem ipsum
-                    dolor sit amet consectetur adipisicing elit. Fugit qui illum sed minima ratione beatae ipsa
-                    quis consequatur a, facilis doloribus ex. Ipsa nihil magnam ullam deleniti sunt, optio vitae!
-                </p>
-                <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Fugit qui illum sed minima ratione beatae ipsa
-                    quis consequatur a, facilis doloribus ex. Ipsa nihil magnam ullam deleniti sunt, optio vitae!Lorem ipsum
-                    dolor sit amet consectetur adipisicing elit. Fugit qui illum sed minima ratione beatae ipsa
-                    quis consequatur a, facilis doloribus ex. Ipsa nihil magnam ullam deleniti sunt, optio vitae!Lorem ipsum
-                    dolor sit amet consectetur adipisicing elit. Fugit qui illum sed minima ratione beatae ipsa
-                    quis consequatur a, facilis doloribus ex. Ipsa nihil magnam ullam deleniti sunt, optio vitae!Lorem ipsum
-                    dolor sit amet consectetur adipisicing elit. Fugit qui illum sed minima ratione beatae ipsa
-                    quis consequatur a, facilis doloribus ex. Ipsa nihil magnam ullam deleniti sunt, optio vitae!Lorem ipsum
-                    dolor sit amet consectetur adipisicing elit. Fugit qui illum sed minima ratione beatae ipsa
-                    quis consequatur a, facilis doloribus ex. Ipsa nihil magnam ullam deleniti sunt, optio vitae!
-                </p>
+            <div className="w-full relative mt-24 ">
+                {images.map(({ src, y }, i) => {
+                    return (
+                        <motion.div
+                            style={{ y }}
+                            key={`i_${i}`}
+                            className="relative z-10 w-full"
+                        >
+                            <img src={src} placeholder="blur" alt="image" style={{ zIndex: `${i}` }} className="flex w-2/3 object-cover justify-center relative mt-1 " />
+                        </motion.div>
+                    );
+                })}
             </div>
-            <div className="parallax-layer" style={{ transform: `translateY(${scrollY * -2}vh)`, backgroundColor: 'yellow', zIndex: 2, height: '100vh' }}>
-                <h3>rocks !</h3>
-                <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Fugit qui illum sed minima ratione beatae ipsa
-                    quis consequatur a, facilis doloribus ex. Ipsa nihil magnam ullam deleniti sunt, optio vitae!Lorem ipsum
-                    dolor sit amet consectetur adipisicing elit. Fugit qui illum sed minima ratione beatae ipsa
-                    quis consequatur a, facilis doloribus ex. Ipsa nihil magnam ullam deleniti sunt, optio vitae!Lorem ipsum
-                    dolor sit amet consectetur adipisicing elit. Fugit qui illum sed minima ratione beatae ipsa
-                    quis consequatur a, facilis doloribus ex. Ipsa nihil magnam ullam deleniti sunt, optio vitae!Lorem ipsum
-                    dolor sit amet consectetur adipisicing elit. Fugit qui illum sed minima ratione beatae ipsa
-                    quis consequatur a, facilis doloribus ex. Ipsa nihil magnam ullam deleniti sunt, optio vitae!Lorem ipsum
-                    dolor sit amet consectetur adipisicing elit. Fugit qui illum sed minima ratione beatae ipsa
-                    quis consequatur a, facilis doloribus ex. Ipsa nihil magnam ullam deleniti sunt, optio vitae!
-                </p>
-            </div>
-            <div className="parallax-layer" style={{ transform: `translateY(${scrollY * -4}vh)`, backgroundColor: 'yellow', zIndex: 2, height: '100vh' }}>
-                <h3>rocks !</h3>
-                <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Fugit qui illum sed minima ratione beatae ipsa
-                    quis consequatur a, facilis doloribus ex. Ipsa nihil magnam ullam deleniti sunt, optio vitae!Lorem ipsum
-                    dolor sit amet consectetur adipisicing elit. Fugit qui illum sed minima ratione beatae ipsa
-                    quis consequatur a, facilis doloribus ex. Ipsa nihil magnam ullam deleniti sunt, optio vitae!Lorem ipsum
-                    dolor sit amet consectetur adipisicing elit. Fugit qui illum sed minima ratione beatae ipsa
-                    quis consequatur a, facilis doloribus ex. Ipsa nihil magnam ullam deleniti sunt, optio vitae!Lorem ipsum
-                    dolor sit amet consectetur adipisicing elit. Fugit qui illum sed minima ratione beatae ipsa
-                    quis consequatur a, facilis doloribus ex. Ipsa nihil magnam ullam deleniti sunt, optio vitae!Lorem ipsum
-                    dolor sit amet consectetur adipisicing elit. Fugit qui illum sed minima ratione beatae ipsa
-                    quis consequatur a, facilis doloribus ex. Ipsa nihil magnam ullam deleniti sunt, optio vitae!
-                </p>
-            </div>
+
         </div>
     );
 };
