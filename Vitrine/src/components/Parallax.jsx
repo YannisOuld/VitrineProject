@@ -1,5 +1,4 @@
 import React, { useRef } from "react";
-import Picture1 from "../../src/assets/stairs.jpg";
 import Picture2 from "../../src/assets/moon.png";
 import Picture3 from "../../src/assets/clouds.png";
 import { motion, useScroll, useTransform } from "framer-motion";
@@ -14,15 +13,11 @@ const Parallax = () => {
         offset: ["start end", "end start"],
     });
 
-    const sm = useTransform(scrollYProgress, [0, 1], [0, -50]);
-    const md = useTransform(scrollYProgress, [0, 1], [0, -50]);
-    const lg = useTransform(scrollYProgress, [0, 1], [0, -600]);
+    const sm = useTransform(scrollYProgress, [0, 1], [0, 200]);
+    const md = useTransform(scrollYProgress, [0, 1], [0, 2800]);
+    const lg = useTransform(scrollYProgress, [0, 1], [0, -500]);
 
     const images = [
-        {
-            src: Picture1,
-            y: 0,
-        },
 
         {
             src: Picture2,
@@ -36,11 +31,11 @@ const Parallax = () => {
     ];
 
     return (
+
         <div
             ref={container}
-            className=" w-200px  flex flex-col justify-center absolute"
+            className="w-full  flex flex-col justify-center absolute"
         >
-
             <motion.h1 style={{ y: sm }} className="relative">
                 Parallax
             </motion.h1>
@@ -64,7 +59,8 @@ const Parallax = () => {
                     })}
                 </p>
             </div>
-            <div className="w-full relative mt-24 ">
+            <div className="w-full relative flex flex-col  justify-center mt-24 
+             ">
                 {images.map(({ src, y }, i) => {
                     return (
                         <motion.div
@@ -72,7 +68,7 @@ const Parallax = () => {
                             key={`i_${i}`}
                             className="relative z-10 w-full"
                         >
-                            <img src={src} placeholder="blur" alt="image" style={{ zIndex: `${i}` }} className="flex w-2/3 object-cover justify-center relative mt-1 " />
+                            <img src={src} placeholder="blur" alt="image" style={{ zIndex: `${i}` }} className="flex w-3/4 object-cover justify-center mx-auto relative mt-1 " />
                         </motion.div>
                     );
                 })}

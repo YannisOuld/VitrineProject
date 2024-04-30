@@ -11,9 +11,12 @@ function App() {
 
   const [isActive, setIsActive] = useState(false);
   return (
-    <div className='w-full h-full flex justify-center'>
-      <Scene1 />
-      <Scene2 />
+    <div className='w-full h-full flex  flex-col justify-center text-center  m-auto '>
+      <div className='w-full relative'>
+
+        <Scene1 />
+        <Scene2 />
+      </div>
       <BlurryCursor isActive={isActive} />
       <Parallax onMouseOver={() => { setIsActive(true) }} onMouseLeave={() => { setIsActive(false) }} />
     </div>
