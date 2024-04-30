@@ -14,7 +14,7 @@ const Parallax = () => {
     });
 
     const sm = useTransform(scrollYProgress, [0, 1], [0, 200]);
-    const md = useTransform(scrollYProgress, [0, 1], [0, 2800]);
+    const md = useTransform(scrollYProgress, [0, 1], [0, 2500]);
     const lg = useTransform(scrollYProgress, [0, 1], [0, -500]);
 
     const images = [
